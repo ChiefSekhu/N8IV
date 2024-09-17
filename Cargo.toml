@@ -1,0 +1,15 @@
+[package]
+name = "n8iv_blockchain"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1.0", features = ["full"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+sha2 = "0.9"
+rand = "0.8"
+hyper = { version = "0.14", features = ["full"] }
+futures = "0.3"
+curve25519-dalek = "3.0"
+ed25519-dalek = "1.0"
