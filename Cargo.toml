@@ -12,4 +12,4 @@ hyper = { version = "0.14", features = ["full"] }
 futures = "0.3"
 curve25519-dalek = "3.0"
 ed25519-dalek = "1.0"
-rand = { version = "0.8", features = ["std"] }  # Add "std" feature for compatibility
+rand = { version = "0.8.5", features = ["getrandom", "std"] }  # Specify compatible version with ed25519-dalek
