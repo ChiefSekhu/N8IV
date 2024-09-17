@@ -1,10 +1,15 @@
+[package]
+name = "n8iv_blockchain"
+version = "0.1.0"
+edition = "2021"
+
 [dependencies]
-ed25519-dalek = "1.0"
-tokio = { version = "1.0", features = ["full"] }
-serde = { version = "1.0", features = ["derive"] }
-serde_json = "1.0"
-sha2 = "0.9"
-rand = "0.8"
-hyper = { version = "0.14", features = ["full"] }
-futures = "0.3"
-curve25519-dalek = "3.0"
+tokio = { version = "1.0", features = ["full"] }    # Async operations
+serde = { version = "1.0", features = ["derive"] }  # Serialization/deserialization
+serde_json = "1.0"                                  # JSON parsing
+sha2 = "0.9"                                        # SHA-256 for hashing
+rand = "0.8"                                        # Random number generation
+hyper = { version = "0.14", features = ["full"] }   # HTTP client/server
+futures = "0.3"                                     # Async futures handling
+curve25519-dalek = "3.0"                            # Cryptography for Curve25519
+ed25519-dalek = "1.0"                               # Ed25519 signature scheme
