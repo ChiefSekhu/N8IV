@@ -2,8 +2,7 @@ use std::collections::HashMap;
 use sha2::{Sha256, Digest};
 use serde::{Serialize, Deserialize};
 use ed25519_dalek::{Keypair, Signer};
-use rand::rngs::StdRng;  // Use StdRng instead of ThreadRng
-use rand::{SeedableRng, RngCore};  // Required for generating the keypair
+use rand::rngs::OsRng;  // Use OsRng, which implements CryptoRng and RngCore
 
 #[derive(Clone, Serialize, Deserialize)]
 pub struct Block {
@@ -21,9 +20,9 @@ pub struct N8IVChain {
 
 impl N8IVChain {
     pub fn new() -> Self {
-        // Generate a keypair using StdRng
-        let mut rng = StdRng::from_entropy();  // Initialize the RNG with entropy
-        let keypair = Keypair::generate(&mut rng);  // Generate the keypair
+        // Generate a keypair using OsRng, which satisfies both CryptoRng and RngCore
+        let mut csprng = OsRng;  // Initialize the RNG with OsRng
+        let keypair = Keypair::generate(&mut csprng);  // Generate the keypair
 
         let genesis_block = Block {
             hash: String::from("genesis"),
@@ -63,4 +62,4 @@ impl N8IVChain {
     fn generate_hash(&self, data: &str) -> String {
         format!("{:x}", Sha256::digest(data.as_bytes()))
     }
-}  // <- This closing brace was missing, now fixed
+}
