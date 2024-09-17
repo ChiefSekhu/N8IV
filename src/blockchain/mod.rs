@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use sha2::{Sha256, Digest};
 use serde::{Serialize, Deserialize};
-use ed25519_dalek::{Keypair, Signature, Signer, PUBLIC_KEY_LENGTH, SIGNATURE_LENGTH};
+use ed25519_dalek::{Keypair, Signer};
 use rand::rngs::OsRng;
 
 #[derive(Clone, Serialize, Deserialize)]
@@ -22,14 +22,14 @@ pub struct N8IVChain {
 impl N8IVChain {
     pub fn new() -> Self {
         // Generate a keypair for signing the blocks
-        let mut csprng = OsRng{};
+        let mut csprng = OsRng {};
         let keypair = Keypair::generate(&mut csprng);
 
         let genesis_block = Block {
             hash: String::from("genesis"),
             previous_hashes: vec![],
             data: String::from("Genesis Block"),
-            signature: vec![0; SIGNATURE_LENGTH], // Placeholder signature
+            signature: vec![0; 64], // Placeholder signature for genesis block
         };
         let mut blocks = HashMap::new();
         blocks.insert(genesis_block.hash.clone(), genesis_block.clone());
@@ -58,12 +58,6 @@ impl N8IVChain {
         };
         self.blocks.insert(new_block.hash.clone(), new_block);
     }
-
-    fn generate_hash(&self, data: &str) -> String {
-        format!("{:x}", Sha256::digest(data.as_bytes()))
-    }
-}
-
 
     fn generate_hash(&self, data: &str) -> String {
         format!("{:x}", Sha256::digest(data.as_bytes()))
