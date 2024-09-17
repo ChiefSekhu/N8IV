@@ -60,4 +60,7 @@ impl N8IVChain {
         self.blocks.insert(new_block.hash.clone(), new_block);
     }
 
-  
+    fn generate_hash(&self, data: &str) -> String {
+        format!("{:x}", Sha256::digest(data.as_bytes()))
+    }
+}  // <- This closing brace was missing, now fixed
