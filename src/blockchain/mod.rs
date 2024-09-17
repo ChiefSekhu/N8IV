@@ -4,7 +4,7 @@ use serde::{Serialize, Deserialize};
 use ed25519_dalek::{Keypair, Signer};
 use rand::rngs::OsRng;
 
-#[derive(Clone, Serialize, Deserialize)]
+#[derive(Serialize, Deserialize)]
 pub struct Block {
     pub hash: String,
     pub previous_hashes: Vec<String>,
@@ -12,11 +12,10 @@ pub struct Block {
     pub signature: Vec<u8>,
 }
 
-#[derive(Clone)]
 pub struct N8IVChain {
     pub blocks: HashMap<String, Block>,
     pub genesis_block: Block,
-    pub keypair: Keypair, // Add keypair for signing blocks
+    pub keypair: Keypair, // No need to clone this, it's a unique private key
 }
 
 impl N8IVChain {
@@ -29,10 +28,11 @@ impl N8IVChain {
             hash: String::from("genesis"),
             previous_hashes: vec![],
             data: String::from("Genesis Block"),
-            signature: vec![0; 64], // Placeholder signature for genesis block
+            signature: vec![0; 64], // Placeholder signature
         };
         let mut blocks = HashMap::new();
         blocks.insert(genesis_block.hash.clone(), genesis_block.clone());
+
         Self {
             blocks,
             genesis_block,
