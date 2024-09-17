@@ -2,7 +2,7 @@ use std::collections::HashMap;
 use sha2::{Sha256, Digest};
 use serde::{Serialize, Deserialize};
 use ed25519_dalek::{Keypair, Signer};
-use rand::rngs::OsRng;  // Use OsRng, which implements CryptoRng and RngCore
+use rand::rngs::OsRng;  // Import OsRng, compatible with these versions
 
 #[derive(Clone, Serialize, Deserialize)]
 pub struct Block {
