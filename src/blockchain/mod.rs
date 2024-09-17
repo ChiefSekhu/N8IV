@@ -4,7 +4,7 @@ use serde::{Serialize, Deserialize};
 use ed25519_dalek::{Keypair, Signer};
 use rand::rngs::OsRng;
 
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Serialize, Deserialize)]
 pub struct Block {
     pub hash: String,
     pub previous_hashes: Vec<String>,
@@ -15,7 +15,7 @@ pub struct Block {
 pub struct N8IVChain {
     pub blocks: HashMap<String, Block>,
     pub genesis_block: Block,
-    pub keypair: Keypair, // No need to clone this, it's a unique private key
+    pub keypair: Keypair,
 }
 
 impl N8IVChain {
@@ -63,3 +63,4 @@ impl N8IVChain {
         format!("{:x}", Sha256::digest(data.as_bytes()))
     }
 }
+
