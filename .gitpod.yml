@@ -1,0 +1,10 @@
+image:
+  file: .gitpod.Dockerfile
+
+tasks:
+  - init: 'rustup default stable'
+  - command: 'cargo build'
+
+ports:
+  - port: 8000
+    onOpen: open-preview
