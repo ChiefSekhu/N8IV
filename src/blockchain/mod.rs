@@ -2,7 +2,8 @@ use std::collections::HashMap;
 use sha2::{Sha256, Digest};
 use serde::{Serialize, Deserialize};
 use ed25519_dalek::{Keypair, Signer};
-use rand::rngs::OsRng;  // Ensure this import is from rand::rngs
+use rand_chacha::ChaCha20Rng;  // Use ChaCha20Rng for secure random number generation
+use rand::SeedableRng;         // Import SeedableRng to initialize ChaCha20Rng
 
 #[derive(Clone, Serialize, Deserialize)]
 pub struct Block {
@@ -20,9 +21,9 @@ pub struct N8IVChain {
 
 impl N8IVChain {
     pub fn new() -> Self {
-        // Generate a keypair for signing the blocks
-        let mut csprng = OsRng {};  // Use OsRng from rand::rngs
-        let keypair = Keypair::generate(&mut csprng);
+        // Generate a keypair using ChaCha20Rng
+        let mut rng = ChaCha20Rng::from_entropy();  // Initialize RNG
+        let keypair = Keypair::generate(&mut rng);
 
         let genesis_block = Block {
             hash: String::from("genesis"),
